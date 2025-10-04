@@ -10,17 +10,18 @@ from pathlib import Path
 # Add the src directory to the Python path
 sys.path.append(str(Path(__file__).parent.parent))
 
-from src.database.config import SQLALCHEMY_DATABASE_URL
+from src.env import get_settings
 from src.models.base import Base
-from src.models.museum import Artist, Artwork
-from src.models.image_content import ImageContent  # Import all models here
+from src.models.image_content import ImageContent  #noqa
+
+settings = get_settings()
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
 
 # Set the SQLAlchemy URL in the alembic.ini file
-config.set_main_option("sqlalchemy.url", SQLALCHEMY_DATABASE_URL)
+config.set_main_option("sqlalchemy.url", settings.database_url)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.

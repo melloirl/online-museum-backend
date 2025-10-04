@@ -1,5 +1,6 @@
 fastapi[standard]
 psycopg2-binary
 pydantic
+pydantic-settings
 alembic
 SQLAlchemy

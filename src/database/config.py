@@ -1,32 +1,17 @@
-import os
-from typing import Generator
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
-from dotenv import load_dotenv
+from typing import Generator
 
-# Load environment variables from .env file
-load_dotenv()
+from src.env import get_settings
 
-# Get database connection details from environment variables
-POSTGRES_USER = os.getenv("POSTGRES_USER", "museum_user")
-POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD", "museum_password")
-POSTGRES_DB = os.getenv("POSTGRES_DB", "online_museum")
-POSTGRES_HOST = os.getenv("POSTGRES_HOST", "localhost")
-POSTGRES_PORT = os.getenv("POSTGRES_PORT", "5432")
+settings = get_settings()
 
-SQLALCHEMY_DATABASE_URL = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}"
-
-engine = create_engine(SQLALCHEMY_DATABASE_URL)
+engine = create_engine(settings.database_url)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
 Base = declarative_base()
 
 def get_db() -> Generator[Session, None, None]:
-    """
-    Get database session with dependency injection pattern.
-    Used by FastAPI dependency injection system.
-    """
     db = SessionLocal()
     try:
         yield db
