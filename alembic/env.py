@@ -12,7 +12,7 @@ sys.path.append(str(Path(__file__).parent.parent))
 
 from src.env import get_settings
 from src.models.base import Base
-from src.models.image_content import ImageContent  #noqa
+from src.models.image_content import ImageContent  # noqa
 
 settings = get_settings()
 
@@ -78,9 +78,7 @@ def run_migrations_online() -> None:
     )
 
     with connectable.connect() as connection:
-        context.configure(
-            connection=connection, target_metadata=target_metadata
-        )
+        context.configure(connection=connection, target_metadata=target_metadata)
 
         with context.begin_transaction():
             context.run_migrations()

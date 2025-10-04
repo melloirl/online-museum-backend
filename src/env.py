@@ -17,6 +17,13 @@ class Settings(BaseSettings):
     postgres_host: str = "localhost"
     postgres_port: int = 5432
 
+    # Storage configuration
+    r2_access_key_id: str = "your-access-key-id"
+    r2_secret_access_key: str = "your-secret-access-key"
+    r2_bucket_name: str = "online-museum-images"
+    r2_account_id: str = "your-account-id"
+    r2_public_base: str = "https://<your-cf-domain>.r2.dev"
+
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"
