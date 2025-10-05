@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ title }} - Museu Online</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/app.css') }}" />
+    <style>
+      .flip-card {
+        perspective: 1000px;
+      }
+      .flip-card-inner {
+        position: relative;
+        width: 100%;
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+      }
+      .flip-card.flipped .flip-card-inner {
+        transform: rotateY(180deg);
+      }
+      .flip-card-front,
+      .flip-card-back {
+        backface-visibility: hidden;
+        width: 100%;
+        position: relative; /* let it grow with content */
+      }
+      .flip-card-back {
+        transform: rotateY(180deg);
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50 text-gray-900 min-h-screen flex items-center justify-center p-4">
+    <main class="w-full max-w-3xl bg-white rounded-xl shadow-lg p-6">
+      <div id="museum-card" class="flip-card">
+        <div class="flip-card-inner">
+          <!-- FRONT -->
+          <div class="flip-card-front flex flex-col items-center">
+            <img src="{{ image_url }}" alt="{{ title }}" class="w-full max-h-[400px] object-contain rounded-lg shadow mb-6" />
+            <h1 class="text-2xl sm:text-3xl font-semibold text-gray-800 mb-4 text-center">{{ title }}</h1>
+            <p class="text-base sm:text-lg text-gray-700 leading-relaxed text-justify">{{ description }}</p>
+          </div>
+
+          <!-- BACK -->
+          <div class="flip-card-back flex flex-col items-center justify-center p-6">
+            <h2 class="text-xl sm:text-2xl font-semibold text-gray-800 mb-4">Compartilhe esta obra</h2>
+            <img src="{{ qr_code }}" alt="QR Code" class="w-40 h-40 sm:w-56 sm:h-56 rounded-lg shadow-md border border-gray-200 mb-4" />
+            <p class="text-sm sm:text-base text-gray-600 mb-2">Escaneie com seu celular ou compartilhe o link:</p>
+            <a href="{{request.url}}" class="break-all text-blue-600 hover:underline text-sm sm:text-base"> {{request.url}} </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Button -->
+      <div class="text-center mt-6">
+        <button id="toggle-btn" class="px-4 sm:px-6 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition text-sm sm:text-base">Mostrar QR Code</button>
+      </div>
+    </main>
+
+    <script>
+      const card = document.getElementById('museum-card')
+      const btn = document.getElementById('toggle-btn')
+      btn.addEventListener('click', () => {
+        card.classList.toggle('flipped')
+        btn.textContent = card.classList.contains('flipped') ? 'Mostrar Obra' : 'Mostrar QR Code'
+      })
+    </script>
+  </body>
+</html>

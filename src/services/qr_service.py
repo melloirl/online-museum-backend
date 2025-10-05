@@ -1,20 +1,17 @@
-import io
-from qrcode import QRCode, constants
+import qrcode
+import base64
+from io import BytesIO
 
 
 class QRService:
-    def generate_qr(self, url: str) -> bytes:
-        if not url or not isinstance(url, str):
+    def generate_qr(self, data: str) -> str:
+        if not data or not isinstance(data, str):
             raise ValueError("URL must be a non-empty string")
 
-        qr = QRCode(
-            version=1, error_correction=constants.ERROR_CORRECT_L, box_size=10, border=4
-        )
-        qr.add_data(url)
-        qr.make(fit=True)
+        qr = qrcode.make(data)
+        buf = BytesIO()
+        qr.save(buf, format="PNG")
+        img_bytes = buf.getvalue()
+        base64_str = base64.b64encode(img_bytes).decode("utf-8")
 
-        img = qr.make_image(fill_color="black", back_color="white")
-
-        buffer = io.BytesIO()
-        img.save(buffer, format="PNG")
-        return buffer.getvalue()
+        return f"data:image/png;base64,{base64_str}"

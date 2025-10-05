@@ -2,7 +2,7 @@ from typing import List
 from fastapi import APIRouter, Depends, HTTPException, status, Form, UploadFile, File
 from sqlalchemy.orm import Session
 
-from ..storage.r2 import upload_file
+from ..storage.s3 import upload_file
 from ..database.config import get_db
 from ..models.image_content import ImageContent
 from ..schemas.image_content import (

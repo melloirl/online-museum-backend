@@ -5,7 +5,7 @@ settings = get_settings()
 
 s3_client = boto3.client(
     "s3",
-    endpoint_url=f"https://{settings.s3_account_id}.r2.cloudflarestorage.com",
+    endpoint_url=settings.s3_endpoint_url,
     aws_access_key_id=settings.s3_access_key_id,
     aws_secret_access_key=settings.s3_secret_access_key,
     region_name="auto",

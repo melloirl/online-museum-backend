@@ -16,13 +16,13 @@ class Settings(BaseSettings):
     postgres_db: str = "online_museum"
     postgres_host: str = "localhost"
     postgres_port: int = 5432
+    postgres_pool_mode: str = "session"
 
     # Storage configuration
-    r2_access_key_id: str = "your-access-key-id"
-    r2_secret_access_key: str = "your-secret-access-key"
-    r2_bucket_name: str = "online-museum-images"
-    r2_account_id: str = "your-account-id"
-    r2_public_base: str = "https://<your-cf-domain>.r2.dev"
+    s3_access_key_id: str = "your-access-key-id"
+    s3_secret_access_key: str = "your-secret-access-key"
+    s3_bucket_name: str = "online-museum-images"
+    s3_endpoint_url: str = "https://<your-cf-domain>.s3.dev"
 
     class Config:
         env_file = ".env"

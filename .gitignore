@@ -23,3 +23,6 @@ venv/
 # Database
 *.sqlite3
 *.db
+
+# Templates
+tailwindcss/node_modules
