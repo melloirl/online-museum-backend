@@ -1,31 +1,47 @@
+import os
+from dotenv import load_dotenv
+
 from pydantic_settings import BaseSettings
 from functools import lru_cache
 from typing import Literal
 
 
+def select_env_file() -> str:
+    load_dotenv()
+    environment = os.getenv("ENV", None)
+    if not environment:
+        raise ValueError("Missing environment setting")
+
+    return f".env.{environment.lower().strip()}"
+
+
+env_file = select_env_file()
+
+
 class Settings(BaseSettings):
     # Environment
-    env: Literal["DEV", "STG", "PROD"] = "DEV"
+    env: Literal["DEV", "STG", "PROD"]
 
     # CORS
-    allowed_origins: str = "*"
+    allowed_origins: str
 
     # Database Configuration
-    postgres_user: str = "museum_user"
-    postgres_password: str = "museum_password"
-    postgres_db: str = "online_museum"
-    postgres_host: str = "localhost"
-    postgres_port: int = 5432
-    postgres_pool_mode: str = "session"
+    postgres_user: str
+    postgres_password: str
+    postgres_db: str
+    postgres_host: str
+    postgres_port: int
+    postgres_pool_mode: str
 
     # Storage configuration
-    s3_access_key_id: str = "your-access-key-id"
-    s3_secret_access_key: str = "your-secret-access-key"
-    s3_bucket_name: str = "online-museum-images"
-    s3_endpoint_url: str = "https://<your-cf-domain>.s3.dev"
+    s3_access_key_id: str
+    s3_secret_access_key: str
+    s3_bucket_name: str
+    s3_endpoint_url: str
+    s3_base_url: str
 
     class Config:
-        env_file = ".env"
+        env_file = env_file
         env_file_encoding = "utf-8"
 
     @property

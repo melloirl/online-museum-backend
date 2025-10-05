@@ -21,4 +21,4 @@ def upload_file(file_name: str, content: bytes, content_type: str) -> str:
         ContentType=content_type,
         ACL="public-read",
     )
-    return f"{settings.s3_public_base}/{file_name}"
+    return f"{settings.s3_base_url}/{file_name}"

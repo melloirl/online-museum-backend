@@ -103,7 +103,7 @@ async def upload_image(
     ext = file.filename.split(".")[-1]
     file_name = f"{uuid.uuid4()}.{ext}"
 
-    # upload to R2
+    # upload to S3
     image_url = upload_file(file_name, contents, file.content_type)
 
     # store metadata in DB

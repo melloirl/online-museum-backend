@@ -9,7 +9,7 @@ def test_generate_qr_from_url_returns_bytes():
     qr_bytes = service.generate_qr(url)
 
     # basic assertions
-    assert isinstance(qr_bytes, bytes)  # data returned is in fact of class bytes
+    assert isinstance(qr_bytes, str)  # data returned is a base 64 encoded string
     assert len(qr_bytes) > 0  # data returned is not empty
 
 
